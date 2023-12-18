@@ -5,7 +5,9 @@
 /*                   class 함수                   */
 /* -------------------------------------------- */
 
-function addClass(node,className){
+import { getNode } from "./getNode.js";
+
+export function addClass(node,className){
   
   if(typeof node === 'string') node = getNode(node);
   if(typeof className !== 'string'){
@@ -15,7 +17,7 @@ function addClass(node,className){
   node.classList.add(className);
 }
 
-function removeClass(node,className){
+export function removeClass(node,className){
   
   if(typeof node === 'string') node = getNode(node);
   if(!className){
@@ -29,7 +31,7 @@ function removeClass(node,className){
   node.classList.remove(className);
 }
 
-function toggleClass(node,className){
+export function toggleClass(node,className){
   
   if(typeof node === 'string') node = getNode(node);
   if(typeof className !== 'string'){
@@ -72,7 +74,7 @@ function setCss(node,prop,value){
   node.style[prop] = value;
 }
 
-const css = (node,prop,value)=> !value ? getCss(node,prop) : setCss(node,prop,value);
+export const css = (node,prop,value)=> !value ? getCss(node,prop) : setCss(node,prop,value);
 
 
 

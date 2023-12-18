@@ -67,4 +67,6 @@ function setAttr(node,prop,value){
   node.setAttribute(prop,value)
 }
 
-const attr = (node,prop,value) => value === undefined ? getAttr(node,prop) : setAttr(node,prop,value)
+export const attr = (node,prop,value) => value === undefined ? getAttr(node,prop) : setAttr(node,prop,value)
+
+

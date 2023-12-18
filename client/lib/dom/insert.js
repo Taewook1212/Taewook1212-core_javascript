@@ -1,30 +1,25 @@
 import { getNode } from "./getNode.js";
 
+export function insertBefore(node, text) {
+  if (typeof node === "string") node = getNode(node);
 
-export function insertBefore(node,text){
-
-  if(typeof node === 'string') node = getNode(node);
-
-  node.insertAdjacentHTML('beforebegin',text)
+  node.insertAdjacentHTML("beforebegin", text);
 }
 
-export function insertFirst(node,text){
+export function insertFirst(node, text) {
+  if (typeof node === "string") node = getNode(node);
 
-  if(typeof node === 'string') node = getNode(node);
-
-  node.insertAdjacentHTML('afterbegin',text)
+  node.insertAdjacentHTML("afterbegin", text);
 }
 
-export function insertLast(node,text){
+export function insertLast(node, text) {
+  if (typeof node === "string") node = getNode(node);
 
-  if(typeof node === 'string') node = getNode(node);
-
-  node.insertAdjacentHTML('beforeend',text)
+  node.insertAdjacentHTML("beforeend", text);
 }
 
-export function insertAfter(node,text){
+export function insertAfter(node, text) {
+  if (typeof node === "string") node = getNode(node);
 
-  if(typeof node === 'string') node = getNode(node);
-
-  node.insertAdjacentHTML('afterend',text)
+  node.insertAdjacentHTML("afterend", text);
 }

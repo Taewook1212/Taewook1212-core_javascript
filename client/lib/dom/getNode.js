@@ -3,7 +3,7 @@ export function getNode(node, context = document) {
     throw new Error("getNode 함수의 인수는 문자 타입 이어야 합니다.");
   }
 
-  if(context.nodeType !== document.DOCUMENT_NODE){
+  if (context.nodeType !== document.DOCUMENT_NODE) {
     context = document.querySelector(context);
   }
 

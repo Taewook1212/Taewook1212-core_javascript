@@ -47,7 +47,7 @@ const defaultOptions = {
 };
 
 //Promise 비동기 API를 사용  Promise 를 리턴하는 방법
-function delayP(options) {
+export function delayP(options) {
   let config = { ...defaultOptions };
 
   if (isNumber(options)) {
@@ -117,9 +117,9 @@ delayP(false)
 
 // 자바스크립트는 위에서 아래로 읽어주는데 출력할 때 거의 한번에 실행한 것과 같은 출력,. 기다려주지않아..
 // 비동기 작업 콜백과 promise 작업
-first.style.top = "-100px";
-first.style.transform = "rotate(350deg)";
-first.style.top = "0px";
+// first.style.top = "-100px";
+// first.style.transform = "rotate(350deg)";
+// first.style.top = "0px";
 
 /**
  * async - 함수가 promise 객체를 반환 하도록

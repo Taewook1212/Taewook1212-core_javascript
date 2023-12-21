@@ -4,13 +4,23 @@
 //방법 비동기작업
 //1.콜백, 2.promise
 
-/** [readyState]
- * 0:uninitialized
- * 1:loading
- * 2:loaded
- * 3:interactive
- * 4:complete
- */
+/* 
+
+[readyState]
+
+0: uninitialized
+1: loading
+2: loaded
+3: interactive
+4: complete
+
+*/
+
+// 비동기 통신을 해보자!  XMLHttpRequest
+
+/* -------------------------------------------- */
+/*                 XHR callback                 */
+/* -------------------------------------------- */
 
 // 원래는 인자로 parameter를 받을텐데 이것도 받음과 동시에 구조분해로 인자를 받음
 function xhr({
@@ -54,7 +64,10 @@ function xhr({
     }
   });
 
+  // 데이터를 보낼땐 stringify 받을때는 parse
   xhr.send(JSON.stringify(body));
+
+  // send 는 open 다음으로 아무곳이나 위치해도 됨
 }
 //인자로 하나하나 안받고, 객체로 받는다. 콜백함수가 길어지니깐
 // xhr("GET", "https://jsonplaceholder.typicode.com/users", () => {});
@@ -143,3 +156,86 @@ xhr.delete = (url, body, onSuccess, onFail) => {
 //     console.log(err);
 //   }
 // );
+
+/* -------------------------------------------- */
+/*                XHR Promise API               */
+/* -------------------------------------------- */
+
+const defaultOptions = {
+  method: "GET",
+  url: "",
+  body: null,
+  errorMessage: "서버와의 통신이 원할하지 않습니다.",
+  headers: {
+    "Content-type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
+};
+
+export function xhrPromise(options) {
+  // const config = { ...defaultOptions, ...options };
+  // const { method, url, body, data, errorMessage } = config;
+
+  const { method, url, body, errorMessage, headers } = {
+    ...defaultOptions,
+    ...options,
+    headers: { ...defaultOptions.headers, ...options.headers },
+    // 헤더가 인자로 전달되면 깊은복사
+  };
+
+  // const { method, url, body } = options;
+  const xhr = new XMLHttpRequest();
+
+  xhr.open(method, url);
+
+  Object.entries(headers).forEach(([key, value]) => {
+    xhr.setRequestHeader(key, value);
+  });
+
+  xhr.send(JSON.stringify(body));
+
+  return new Promise((resolve, reject) => {
+    xhr.addEventListener("readystatechange", () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status >= 200 && xhr.status < 400) {
+          resolve(JSON.parse(xhr.response));
+        } else {
+          reject({ message: errorMessage });
+        }
+      }
+    });
+  });
+}
+
+// xhrPromise({
+//   url: "https://jsonplaceholder.typicode.com/users",
+// }).then((res) => {
+//   console.log(res);
+// });
+
+xhrPromise.get = (url) => {
+  return xhrPromise({ url });
+};
+
+xhrPromise.post = (url, body) => {
+  return xhrPromise({
+    url,
+    body,
+    method: "POST",
+  });
+};
+
+xhrPromise.put = (url, body) => {
+  return xhrPromise({
+    url,
+    body,
+    method: "PUT",
+  });
+};
+
+xhrPromise.delete = (url) => {
+  return xhrPromise({
+    url,
+    method: "DELETE",
+  });
+};
